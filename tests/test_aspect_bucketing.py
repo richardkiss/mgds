@@ -176,7 +176,6 @@ class TestAspectBucketingOverride(unittest.TestCase):
             f"Expected: {expected_resolutions}, Got: {bucket_resolutions_keys}"
         )
 
-
 if __name__ == '__main__':
     unittest.main()
 
