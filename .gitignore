@@ -2,3 +2,13 @@
 
 /venv/
 /run/
+
+# Python build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.so
+
