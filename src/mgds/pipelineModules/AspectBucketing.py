@@ -141,16 +141,21 @@ class AspectBucketing(
 
         if self.target_resolutions_override_in_name is not None:
             for index in range(self._get_previous_length(self.target_resolutions_override_in_name)):
-                resolutions = self._get_previous_item(variation, self.target_resolutions_override_in_name, index)
-                if 'x' in resolutions and ',' not in resolutions:
-                    res = resolutions.strip().split('x')
-                    possible_fixed_resolutions.add(
-                        self.__quantize_resolution(
-                            (int(res[1]), int(res[0])), self.quantization
+                # Check if override is actually enabled for this concept
+                enable_resolution_override = self._get_previous_item(
+                    variation, self.enable_target_resolutions_override_in_name, index)
+                
+                if enable_resolution_override:
+                    resolutions = self._get_previous_item(variation, self.target_resolutions_override_in_name, index)
+                    if 'x' in resolutions and ',' not in resolutions:
+                        res = resolutions.strip().split('x')
+                        possible_fixed_resolutions.add(
+                            self.__quantize_resolution(
+                                (int(res[1]), int(res[0])), self.quantization
+                            )
                         )
-                    )
-                else:
-                    possible_target_resolutions |= set([int(res.strip()) for res in resolutions.split(',')])
+                    else:
+                        possible_target_resolutions |= set([int(res.strip()) for res in resolutions.split(',')])
 
         for index in range(self._get_previous_length(self.target_frames_in_name)):
             frames = self._get_previous_item(variation, self.target_frames_in_name, index)
